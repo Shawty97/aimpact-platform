@@ -1,0 +1,95 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "pip install -r requirements.txt"
+  },
+  "deploy": {
+    "startCommand": "uvicorn run:app --host 0.0.0.0 --port $PORT --workers 4",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 100,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "plugins": {
+    "postgresql": {
+      "service": "aimpact-db",
+      "envs": ["DATABASE_URL"]
+    }
+  },
+  "environments": {
+    "production": {
+      "deploy": {
+        "numReplicas": 2,
+        "sleepApplication": false,
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 10
+      },
+      "envs": [
+        { "name": "ENVIRONMENT", "value": "production" },
+        { "name": "DEBUG", "value": "false" },
+        { "name": "LOG_LEVEL", "value": "INFO" }
+      ]
+    },
+    "development": {
+      "deploy": {
+        "numReplicas": 1,
+        "sleepApplication": true
+      },
+      "envs": [
+        { "name": "ENVIRONMENT", "value": "development" },
+        { "name": "DEBUG", "value": "true" },
+        { "name": "LOG_LEVEL", "value": "DEBUG" }
+      ]
+    }
+  },
+  "variables": {
+    "common": [
+      { "name": "APP_NAME", "value": "AImpact Platform" },
+      { "name": "VERSION", "value": "0.1.0" },
+      { "name": "API_PREFIX", "value": "/api/v1" },
+      { "name": "HOST", "value": "0.0.0.0" },
+      { "name": "PORT", "value": "$PORT" },
+      { "name": "CORS_ORIGINS", "value": "https://*.aimpact.app,http://localhost:3000" },
+      { "name": "CORS_METHODS", "value": "GET,POST,PUT,DELETE,OPTIONS" },
+      { "name": "CORS_HEADERS", "value": "*" }
+    ],
+    "database": [
+      { "name": "DATABASE_URL", "value": "${{DATABASE_URL}}" },
+      { "name": "DATABASE_POOL_SIZE", "value": "20" },
+      { "name": "DATABASE_MAX_OVERFLOW", "value": "10" },
+      { "name": "DATABASE_POOL_TIMEOUT", "value": "30" }
+    ],
+    "llm_providers": [
+      { "name": "OPENAI_API_KEY", "value": "" },
+      { "name": "ANTHROPIC_API_KEY", "value": "" },
+      { "name": "COHERE_API_KEY", "value": "" },
+      { "name": "AZURE_OPENAI_API_KEY", "value": "" },
+      { "name": "AZURE_OPENAI_ENDPOINT", "value": "" },
+      { "name": "DEFAULT_LLM_PROVIDER", "value": "openai" }
+    ],
+    "voice": [
+      { "name": "ELEVENLABS_API_KEY", "value": "" },
+      { "name": "VOICE_ENGINE_TYPE", "value": "elevenlabs" },
+      { "name": "DEFAULT_VOICE_ID", "value": "" },
+      { "name": "SPEECH_RECOGNITION_PROVIDER", "value": "whisper" }
+    ],
+    "agent_store": [
+      { "name": "AGENT_STORE_ENABLED", "value": "true" },
+      { "name": "AGENT_MARKETPLACE_URL", "value": "https://marketplace.aimpact.app" }
+    ],
+    "knowledge_builder": [
+      { "name": "KNOWLEDGE_BUILDER_ENABLED", "value": "true" },
+      { "name": "DOCUMENT_PROCESSOR_URL", "value": "" },
+      { "name": "VECTOR_DB_TYPE", "value": "postgres" },
+      { "name": "VECTOR_DB_URL", "value": "${{DATABASE_URL}}" }
+    ],
+    "monitoring": [
+      { "name": "TELEMETRY_ENABLED", "value": "true" },
+      { "name": "LOGGING_FORMAT", "value": "json" },
+      { "name": "METRICS_ENABLED", "value": "true" },
+      { "name": "TRACING_ENABLED", "value": "true" }
+    ]
+  }
+}
+

@@ -76,6 +76,15 @@ def create_application() -> FastAPI:
         tags=["voice"]
     )
     
+    # Import the agent store router
+    from backend.api.routers import agent_store
+    
+    app.include_router(
+        agent_store.router,
+        prefix=f"{settings.API_PREFIX}/agent-store",
+        tags=["agent-store"]
+    )
+    
     # --- Error handlers ---
     
     @app.exception_handler(RequestValidationError)
@@ -120,10 +129,37 @@ def create_application() -> FastAPI:
     @app.get("/health", tags=["status"])
     async def health_check():
         """Health check endpoint for monitoring."""
+        # Check the status of various components
+        components = {
+            "api": "healthy",
+            "database": "unknown",  # In a real implementation, check DB connection
+            "agent_store": os.environ.get("AGENT_STORE_ENABLED", "false").lower() == "true",
+            "knowledge_builder": os.environ.get("KNOWLEDGE_BUILDER_ENABLED", "false").lower() == "true",
+            "voice_engine": os.environ.get("VOICE_ENGINE_TYPE", "none") != "none"
+        }
+        
+        # Check LLM providers
+        llm_providers = {
+            "openai": len(os.environ.get("OPENAI_API_KEY", "")) > 0,
+            "anthropic": len(os.environ.get("ANTHROPIC_API_KEY", "")) > 0,
+            "cohere": len(os.environ.get("COHERE_API_KEY", "")) > 0,
+            "azure_openai": len(os.environ.get("AZURE_OPENAI_API_KEY", "")) > 0
+        }
+        
+        # Determine overall health status
+        overall_status = "healthy"
+        
+        # In a real implementation, if critical components are down, change status
+        # if components["database"] != "healthy":
+        #     overall_status = "degraded"
+        
         return {
-            "status": "healthy",
+            "status": overall_status,
             "version": settings.VERSION,
-            "environment": settings.ENVIRONMENT
+            "environment": settings.ENVIRONMENT,
+            "components": components,
+            "llm_providers": llm_providers,
+            "timestamp": datetime.now().isoformat()
         }
     
     return app

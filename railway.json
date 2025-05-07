@@ -60,20 +60,28 @@
       { "name": "DATABASE_MAX_OVERFLOW", "value": "10" },
       { "name": "DATABASE_POOL_TIMEOUT", "value": "30" }
     ],
-    "llm_providers": [
-      { "name": "OPENAI_API_KEY", "value": "" },
-      { "name": "ANTHROPIC_API_KEY", "value": "" },
-      { "name": "COHERE_API_KEY", "value": "" },
-      { "name": "AZURE_OPENAI_API_KEY", "value": "" },
-      { "name": "AZURE_OPENAI_ENDPOINT", "value": "" },
-      { "name": "DEFAULT_LLM_PROVIDER", "value": "openai" }
-    ],
-    "voice": [
-      { "name": "ELEVENLABS_API_KEY", "value": "" },
-      { "name": "VOICE_ENGINE_TYPE", "value": "elevenlabs" },
-      { "name": "DEFAULT_VOICE_ID", "value": "" },
-      { "name": "SPEECH_RECOGNITION_PROVIDER", "value": "whisper" }
-    ],
+            "llm_providers": [
+              { "name": "OPENAI_API_KEY", "value": "" },
+              { "name": "ANTHROPIC_API_KEY", "value": "" },
+              { "name": "COHERE_API_KEY", "value": "" },
+              { "name": "AZURE_OPENAI_API_KEY", "value": "" },
+              { "name": "AZURE_OPENAI_ENDPOINT", "value": "" },
+              { "name": "DEFAULT_LLM_PROVIDER", "value": "local" },
+              { "name": "LOCAL_AI_URL", "value": "http://localhost:8080/v1" },
+              { "name": "LOCAL_LLM_MODEL", "value": "mistral-7b-instruct" },
+              { "name": "OLLAMA_URL", "value": "http://localhost:11434" },
+              { "name": "OLLAMA_MODEL", "value": "llama2" }
+            ],
+            "voice": [
+              { "name": "ELEVENLABS_API_KEY", "value": "" },
+              { "name": "VOICE_ENGINE_TYPE", "value": "coqui" },
+              { "name": "DEFAULT_VOICE_ID", "value": "default" },
+              { "name": "SPEECH_RECOGNITION_PROVIDER", "value": "vosk" },
+              { "name": "TTS_MODEL_PATH", "value": "/app/models/tts/coqui" },
+              { "name": "STT_MODEL_PATH", "value": "/app/models/stt/vosk" },
+              { "name": "USE_LOCAL_TTS", "value": "true" },
+              { "name": "USE_LOCAL_STT", "value": "true" }
+            ],
     "agent_store": [
       { "name": "AGENT_STORE_ENABLED", "value": "true" },
       { "name": "AGENT_MARKETPLACE_URL", "value": "https://marketplace.aimpact.app" }

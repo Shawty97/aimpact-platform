@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aimpact-config
+  namespace: aimpact
+data:
+  environment: "production"
+  api-url: "https://api.aimpact.example.com"
+  dashboard-url: "https://dashboard.aimpact.example.com"
+  jwt-expire: "86400"
+  prometheus-retention: "15d"
+  grafana-domain: "metrics.aimpact.example.com"
+

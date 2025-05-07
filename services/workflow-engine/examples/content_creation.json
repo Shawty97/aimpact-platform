@@ -1,0 +1,24 @@
+{
+  "id": "intelligent-content-creation-workflow",
+  "name": "Intelligent Content Creation Workflow",
+  "description": "A multi-stage content creation workflow with adaptive tone adjustment and quality-based branching",
+  "version": "1.0.0",
+  "created_by": "system",
+  "tags": ["content-creation", "adaptive", "multi-stage", "quality-branching"],
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "start",
+      "position": { "x": 100, "y": 100 },
+      "config": {
+        "type": "start",
+        "config": {}
+      }
+    },
+    {
+      "id": "content-requirements",
+      "name": "Get Content Requirements",
+      "type": "function_call",
+      "position": { "x":
+

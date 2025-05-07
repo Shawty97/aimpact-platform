@@ -1,0 +1,394 @@
+{
+  "id": "advanced-customer-service-workflow",
+  "name": "Advanced Customer Service Workflow",
+  "description": "An emotion-aware customer service workflow with A/B testing and adaptive response strategies",
+  "version": "1.0.0",
+  "created_by": "system",
+  "tags": ["customer-service", "emotion-aware", "a-b-testing"],
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "start",
+      "position": { "x": 100, "y": 100 },
+      "config": {
+        "type": "start",
+        "config": {}
+      }
+    },
+    {
+      "id": "get-customer-info",
+      "name": "Get Customer Information",
+      "type": "function_call",
+      "position": { "x": 100, "y": 200 },
+      "config": {
+        "type": "function_call",
+        "config": {
+          "function_name": "get_customer_info",
+          "parameters": {
+            "customer_id": "${input.customer_id}"
+          }
+        }
+      }
+    },
+    {
+      "id": "check-premium",
+      "name": "Check Premium Status",
+      "type": "decision",
+      "position": { "x": 100, "y": 300 },
+      "config": {
+        "type": "decision",
+        "config": {
+          "decision_type": "condition",
+          "conditions": [
+            {
+              "field": "customer_tier",
+              "operator": "equals",
+              "value": "premium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "voice-interaction",
+      "name": "Voice Interaction",
+      "type": "voice_interaction",
+      "position": { "x": 100, "y": 400 },
+      "config": {
+        "type": "voice_interaction",
+        "config": {
+          "voice_id": "professional",
+          "speech_recognition": true,
+          "text_to_speech": true,
+          "emotion_detection": true,
+          "language": "en-US",
+          "greeting": "Hello ${customer.first_name}, how can I assist you today?",
+          "timeout_seconds": 60
+        }
+      }
+    },
+    {
+      "id": "analyze-emotion",
+      "name": "Analyze Customer Emotion",
+      "type": "function_call",
+      "position": { "x": 100, "y": 500 },
+      "config": {
+        "type": "function_call",
+        "config": {
+          "function_name": "analyze_emotion",
+          "parameters": {
+            "voice_data": "${voice_interaction.output}",
+            "customer_history": "${customer_history}"
+          }
+        }
+      }
+    },
+    {
+      "id": "emotion-router",
+      "name": "Route Based on Emotion",
+      "type": "decision",
+      "position": { "x": 100, "y": 600 },
+      "config": {
+        "type": "decision",
+        "config": {
+          "decision_type": "condition",
+          "conditions": [
+            {
+              "field": "primary_emotion",
+              "operator": "equals",
+              "value": "angry"
+            },
+            {
+              "field": "primary_emotion",
+              "operator": "equals",
+              "value": "frustrated"
+            },
+            {
+              "field": "primary_emotion",
+              "operator": "in",
+              "value": ["happy", "neutral", "calm"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "issue-categorization",
+      "name": "Categorize Customer Issue",
+      "type": "llm_prompt",
+      "position": { "x": 300, "y": 500 },
+      "config": {
+        "type": "llm_prompt",
+        "config": {
+          "prompt_template": "Categorize the following customer issue into one of these categories: Billing, Technical, Account, Product, Other.\n\nCustomer issue: ${voice_interaction.transcript}",
+          "model": "gpt-4",
+          "temperature": 0.2,
+          "max_tokens": 50
+        }
+      }
+    },
+    {
+      "id": "ab-test-response",
+      "name": "A/B Test Response Strategies",
+      "type": "experiment",
+      "position": { "x": 500, "y": 500 },
+      "config": {
+        "type": "experiment",
+        "config": {
+          "strategy": "percentage",
+          "variant_a_weight": 50,
+          "variant_b_weight": 50,
+          "experiment_id": "cs-response-strategy-test",
+          "description": "Testing different response strategies for angry customers",
+          "metrics": ["resolution_time", "customer_satisfaction", "agent_efficiency"]
+        }
+      }
+    },
+    {
+      "id": "empathetic-response",
+      "name": "Generate Empathetic Response",
+      "type": "llm_prompt",
+      "position": { "x": 400, "y": 600 },
+      "config": {
+        "type": "llm_prompt",
+        "config": {
+          "prompt_template": "Generate a highly empathetic response for an angry customer with the following issue. Focus on acknowledging their frustration and expressing understanding before offering solutions.\n\nIssue category: ${issue_category}\nCustomer issue: ${voice_interaction.transcript}\nCustomer emotion: ${primary_emotion}\nCustomer name: ${customer.first_name}",
+          "model": "gpt-4",
+          "temperature": 0.7,
+          "max_tokens": 250
+        }
+      }
+    },
+    {
+      "id": "solution-focused-response",
+      "name": "Generate Solution-Focused Response",
+      "type": "llm_prompt",
+      "position": { "x": 600, "y": 600 },
+      "config": {
+        "type": "llm_prompt",
+        "config": {
+          "prompt_template": "Generate a solution-focused response for an angry customer with the following issue. Focus on quickly resolving their problem with minimal emotional acknowledgment.\n\nIssue category: ${issue_category}\nCustomer issue: ${voice_interaction.transcript}\nCustomer name: ${customer.first_name}",
+          "model": "gpt-4",
+          "temperature": 0.5,
+          "max_tokens": 250
+        }
+      }
+    },
+    {
+      "id": "deliver-response",
+      "name": "Deliver Response to Customer",
+      "type": "voice_interaction",
+      "position": { "x": 500, "y": 700 },
+      "config": {
+        "type": "voice_interaction",
+        "config": {
+          "voice_id": "empathetic",
+          "speech_recognition": false,
+          "text_to_speech": true,
+          "emotion_detection": false,
+          "language": "en-US",
+          "message": "${response_content}",
+          "dynamic_voice_adjustment": true
+        }
+      }
+    },
+    {
+      "id": "collect-feedback",
+      "name": "Collect Customer Feedback",
+      "type": "human_in_loop",
+      "position": { "x": 500, "y": 800 },
+      "config": {
+        "type": "human_in_loop",
+        "config": {
+          "feedback_type": "rating",
+          "question": "How satisfied are you with the resolution of your issue?",
+          "options": ["1", "2", "3", "4", "5"],
+          "timeout_seconds": 30,
+          "required": false
+        }
+      }
+    },
+    {
+      "id": "log-interaction",
+      "name": "Log Interaction Details",
+      "type": "function_call",
+      "position": { "x": 500, "y": 900 },
+      "config": {
+        "type": "function_call",
+        "config": {
+          "function_name": "log_interaction",
+          "parameters": {
+            "customer_id": "${input.customer_id}",
+            "interaction_type": "customer_service",
+            "issue_category": "${issue_category}",
+            "emotion_detected": "${primary_emotion}",
+            "response_strategy": "${response_strategy}",
+            "feedback_score": "${feedback.rating}",
+            "interaction_duration": "${duration_seconds}",
+            "experiment_variant": "${experiment_variant}"
+          }
+        }
+      }
+    },
+    {
+      "id": "escalate-to-human",
+      "name": "Escalate to Human Agent",
+      "type": "function_call",
+      "position": { "x": 700, "y": 600 },
+      "config": {
+        "type": "function_call",
+        "config": {
+          "function_name": "escalate_to_human",
+          "parameters": {
+            "customer_id": "${input.customer_id}",
+            "interaction_history": "${interaction_history}",
+            "priority": "high",
+            "agent_notes": "Customer is very frustrated. Issue category: ${issue_category}"
+          }
+        }
+      }
+    },
+    {
+      "id": "end",
+      "name": "End",
+      "type": "end",
+      "position": { "x": 500, "y": 1000 },
+      "config": {
+        "type": "end",
+        "config": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "start-to-get-customer-info",
+      "source_id": "start",
+      "target_id": "get-customer-info",
+      "type": "standard"
+    },
+    {
+      "id": "get-customer-info-to-check-premium",
+      "source_id": "get-customer-info",
+      "target_id": "check-premium",
+      "type": "standard"
+    },
+    {
+      "id": "check-premium-to-voice-interaction",
+      "source_id": "check-premium",
+      "target_id": "voice-interaction",
+      "type": "standard"
+    },
+    {
+      "id": "voice-interaction-to-analyze-emotion",
+      "source_id": "voice-interaction",
+      "target_id": "analyze-emotion",
+      "type": "standard"
+    },
+    {
+      "id": "analyze-emotion-to-emotion-router",
+      "source_id": "analyze-emotion",
+      "target_id": "emotion-router",
+      "type": "standard"
+    },
+    {
+      "id": "emotion-router-to-issue-categorization-not-angry",
+      "source_id": "emotion-router",
+      "target_id": "issue-categorization",
+      "type": "conditional",
+      "condition": {
+        "field": "primary_emotion",
+        "operator": "in",
+        "value": ["happy", "neutral", "calm"]
+      }
+    },
+    {
+      "id": "emotion-router-to-ab-test-angry",
+      "source_id": "emotion-router",
+      "target_id": "ab-test-response",
+      "type": "conditional",
+      "condition": {
+        "field": "primary_emotion",
+        "operator": "in",
+        "value": ["angry", "frustrated"]
+      }
+    },
+    {
+      "id": "issue-categorization-to-deliver-response",
+      "source_id": "issue-categorization",
+      "target_id": "deliver-response",
+      "type": "standard"
+    },
+    {
+      "id": "ab-test-to-empathetic",
+      "source_id": "ab-test-response",
+      "target_id": "empathetic-response",
+      "type": "experiment_a"
+    },
+    {
+      "id": "ab-test-to-solution",
+      "source_id": "ab-test-response",
+      "target_id": "solution-focused-response",
+      "type": "experiment_b"
+    },
+    {
+      "id": "empathetic-to-deliver",
+      "source_id": "empathetic-response",
+      "target_id": "deliver-response",
+      "type": "standard"
+    },
+    {
+      "id": "solution-to-deliver",
+      "source_id": "solution-focused-response",
+      "target_id": "deliver-response",
+      "type": "standard"
+    },
+    {
+      "id": "deliver-to-feedback",
+      "source_id": "deliver-response",
+      "target_id": "collect-feedback",
+      "type": "standard"
+    },
+    {
+      "id": "feedback-to-log",
+      "source_id": "collect-feedback",
+      "target_id": "log-interaction",
+      "type": "standard"
+    },
+    {
+      "id": "log-to-end",
+      "source_id": "log-interaction",
+      "target_id": "end",
+      "type": "standard"
+    },
+    {
+      "id": "emotion-router-to-escalate",
+      "source_id": "emotion-router",
+      "target_id": "escalate-to-human",
+      "type": "conditional",
+      "condition": {
+        "field": "emotion_intensity",
+        "operator": "greater_than",
+        "value": 0.8
+      }
+    },
+    {
+      "id": "escalate-to-end",
+      "source_id": "escalate-to-human",
+      "target_id": "end",
+      "type": "standard"
+    }
+  ],
+  "variables": {
+    "customer": {},
+    "interaction_history": [],
+    "response_strategy": "",
+    "primary_emotion": "",
+    "emotion_intensity": 0,
+    "issue_category": "",
+    "experiment_variant": "",
+    "response_content": "",
+    "duration_seconds": 0
+  }
+}
+

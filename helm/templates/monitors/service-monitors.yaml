@@ -1,0 +1,102 @@
+{{- if .Values.prometheus.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "aimpact.fullname" . }}-backend
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "aimpact.labels" . | nindent 4 }}
+    app: aimpact-backend
+    release: {{ .Values.prometheus.release | default "prometheus" }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "aimpact.selectorLabels" . | nindent 6 }}
+      app: aimpact-backend
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+    - port: metrics
+      interval: {{ .Values.prometheus.scrapeInterval | default "15s" }}
+      path: /metrics
+      scheme: http
+      honorLabels: true
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'go_.*'
+          action: drop
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "aimpact.fullname" . }}-voice
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "aimpact.labels" . | nindent 4 }}
+    app: aimpact-voice
+    release: {{ .Values.prometheus.release | default "prometheus" }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "aimpact.selectorLabels" . | nindent 6 }}
+      app: aimpact-voice
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+    - port: metrics
+      interval: {{ .Values.prometheus.scrapeInterval | default "15s" }}
+      path: /metrics
+      scheme: http
+      honorLabels: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "aimpact.fullname" . }}-workflow
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "aimpact.labels" . | nindent 4 }}
+    app: aimpact-workflow
+    release: {{ .Values.prometheus.release | default "prometheus" }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "aimpact.selectorLabels" . | nindent 6 }}
+      app: aimpact-workflow
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+    - port: metrics
+      interval: {{ .Values.prometheus.scrapeInterval | default "15s" }}
+      path: /metrics
+      scheme: http
+      honorLabels: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "aimpact.fullname" . }}-auth
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "aimpact.labels" . | nindent 4 }}
+    app: aimpact-auth
+    release: {{ .Values.prometheus.release | default "prometheus" }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "aimpact.selectorLabels" . | nindent 6 }}
+      app: aimpact-auth
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+    - port: metrics
+      interval: {{ .Values.prometheus.scrapeInterval | default "15s" }}
+      path: /metrics
+      scheme: http
+      honorLabels: true
+{{- end }}
+

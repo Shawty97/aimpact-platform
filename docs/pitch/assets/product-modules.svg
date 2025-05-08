@@ -1,0 +1,28 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" rx="20" fill="#F0F9FF"/>
+  
+  <!-- Memory Module -->
+  <rect x="100" y="100" width="160" height="120" rx="10" fill="#3B82F6" opacity="0.8"/>
+  <text x="180" y="150" font-family="Arial" font-weight="bold" font-size="16" fill="white" text-anchor="middle">Memory Service</text>
+  <text x="180" y="180" font-family="Arial" font-size="12" fill="white" text-anchor="middle">Contextual Storage</text>
+  
+  <!-- Optimizer Module -->
+  <rect x="320" y="100" width="160" height="120" rx="10" fill="#8B5CF6" opacity="0.8"/>
+  <text x="400" y="150" font-family="Arial" font-weight="bold" font-size="16" fill="white" text-anchor="middle">Optimizer</text>
+  <text x="400" y="180" font-family="Arial" font-size="12" fill="white" text-anchor="middle">Self-Learning Agents</text>
+  
+  <!-- Recommendation Module -->
+  <rect x="540" y="100" width="160" height="120" rx="10" fill="#EC4899" opacity="0.8"/>
+  <text x="620" y="150" font-family="Arial" font-weight="bold" font-size="16" fill="white" text-anchor="middle">Recommendation</text>
+  <text x="620" y="180" font-family="Arial" font-size="12" fill="white" text-anchor="middle">Workflow Insights</text>
+  
+  <!-- Core Platform -->
+  <rect x="210" y="260" width="380" height="80" rx="10" fill="#0F172A"/>
+  <text x="400" y="305" font-family="Arial" font-weight="bold" font-size="18" fill="white" text-anchor="middle">AImPact Core Platform</text>
+  
+  <!-- Connection Lines -->
+  <line x1="180" y1="220" x2="280" y2="260" stroke="#3B82F6" stroke-width="2"/>
+  <line x1="400" y1="220" x2="400" y2="260" stroke="#8B5CF6" stroke-width="2"/>
+  <line x1="620" y1="220" x2="520" y2="260" stroke="#EC4899" stroke-width="2"/>
+</svg>
+

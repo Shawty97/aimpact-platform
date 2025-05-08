@@ -1,0 +1,3 @@
+# Ignore temporary Excel files
+~$*.xlsx
+

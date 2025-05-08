@@ -1,0 +1,90 @@
+{{- if .Values.prometheus.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "aimpact.fullname" . }}-alerts
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "aimpact.labels" . | nindent 4 }}
+    release: {{ .Values.prometheus.release | default "prometheus" }}
+spec:
+  groups:
+  - name: AImpact Platform Alerts
+    rules:
+    # Service availability alerts
+    - alert: ServiceDown
+      expr: up == 0
+      for: 1m
+      labels:
+        severity: critical
+        service: "{{ "{{" }} $labels.kubernetes_name {{ "}}" }}"
+      annotations:
+        summary: "Service {{ "{{" }} $labels.kubernetes_name {{ "}}" }} is down"
+        description: "Service {{ "{{" }} $labels.kubernetes_name {{ "}}" }} in namespace {{ "{{" }} $labels.kubernetes_namespace {{ "}}" }} has been down for more than 1 minute."
+
+    # Error rate alerts  
+    - alert: HighErrorRate
+      expr: sum(rate(aimpact_http_request_errors_total[5m])) by (kubernetes_namespace, kubernetes_name) / sum(rate(aimpact_http_requests_total[5m])) by (kubernetes_namespace, kubernetes_name) > 0.05
+      for: 5m
+      labels:
+        severity: warning
+        service: "{{ "{{" }} $labels.kubernetes_name {{ "}}" }}"
+      annotations:
+        summary: "High error rate for {{ "{{" }} $labels.kubernetes_name {{ "}}" }}"
+        description: "Service {{ "{{" }} $labels.kubernetes_name {{ "}}" }} has a high HTTP error rate (> 5%) over the last 5 minutes."
+
+    # Latency alerts
+    - alert: HighLatency
+      expr: histogram_quantile(0.95, sum(rate(aimpact_http_request_duration_seconds_bucket[5m])) by (kubernetes_namespace, kubernetes_name, le)) > 1
+      for: 5m
+      labels:
+        severity: warning
+        service: "{{ "{{" }} $labels.kubernetes_name {{ "}}" }}"
+      annotations:
+        summary: "High latency for {{ "{{" }} $labels.kubernetes_name {{ "}}" }}"
+        description: "Service {{ "{{" }} $labels.kubernetes_name {{ "}}" }} has 95th percentile latency above 1 second over the last 5 minutes."
+    
+    # Workflow failure alerts
+    - alert: WorkflowFailures
+      expr: sum(rate(aimpact_workflow_executions_total{status="failed"}[5m])) by (workflow_id) > 0
+      for: 5m
+      labels:
+        severity: warning
+        workflow: "{{ "{{" }} $labels.workflow_id {{ "}}" }}"
+      annotations:
+        summary: "Workflow {{ "{{" }} $labels.workflow_id {{ "}}" }} is failing"
+        description: "Workflow {{ "{{" }} $labels.workflow_id {{ "}}" }} has failures in the last 5 minutes."
+        
+    # Voice service alerts
+    - alert: VoiceProcessingErrors
+      expr: sum(rate(aimpact_voice_transcriptions_total{status="error"}[5m])) by (provider) > 0
+      for: 5m
+      labels:
+        severity: warning
+        provider: "{{ "{{" }} $labels.provider {{ "}}" }}"
+      annotations:
+        summary: "Voice processing errors with provider {{ "{{" }} $labels.provider {{ "}}" }}"
+        description: "Voice service is experiencing errors with provider {{ "{{" }} $labels.provider {{ "}}" }} in the last 5 minutes."
+        
+    # Resource alerts
+    - alert: HighCPUUsage
+      expr: avg(rate(container_cpu_usage_seconds_total{namespace="{{ .Release.Namespace }}"}[5m])) by (pod) > 0.8
+      for: 10m
+      labels:
+        severity: warning
+        pod: "{{ "{{" }} $labels.pod {{ "}}" }}"
+      annotations:
+        summary: "High CPU usage for pod {{ "{{" }} $labels.pod {{ "}}" }}"
+        description: "Pod {{ "{{" }} $labels.pod {{ "}}" }} has CPU usage over 80% for more than 10 minutes."
+        
+    - alert: HighMemoryUsage
+      expr: avg(container_memory_working_set_bytes{namespace="{{ .Release.Namespace }}"}) by (pod) / avg(container_spec_memory_limit_bytes{namespace="{{ .Release.Namespace }}"}) by (pod) > 0.85
+      for: 10m
+      labels:
+        severity: warning
+        pod: "{{ "{{" }} $labels.pod {{ "}}" }}"
+      annotations:
+        summary: "High memory usage for pod {{ "{{" }} $labels.pod {{ "}}" }}"
+        description: "Pod {{ "{{" }} $labels.pod {{ "}}" }} has memory usage over 85% for more than 10 minutes."
+{{- end }}
+

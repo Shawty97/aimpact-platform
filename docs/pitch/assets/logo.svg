@@ -1,0 +1,7 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="60" height="60" rx="10" fill="#3B82F6"/>
+  <path d="M15 30L30 15L45 30L30 45L15 30Z" fill="white"/>
+  <path d="M30 15L45 30L30 45" stroke="#1E40AF" stroke-width="2"/>
+  <text x="70" y="38" font-family="Arial" font-weight="bold" font-size="24" fill="#1E3A8A">AImPact</text>
+</svg>
+

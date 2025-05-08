@@ -1,0 +1,41 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" rx="20" fill="#F0F9FF"/>
+  
+  <!-- Title -->
+  <text x="400" y="60" font-family="Arial" font-weight="bold" font-size="24" fill="#0F172A" text-anchor="middle">Business Model: Multi-Tier SaaS</text>
+  
+  <!-- Free Tier -->
+  <rect x="100" y="100" width="180" height="220" rx="10" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+  <rect x="100" y="100" width="180" height="50" rx="10" fill="#3B82F6" opacity="0.8"/>
+  <text x="190" y="130" font-family="Arial" font-weight="bold" font-size="18" fill="white" text-anchor="middle">Free</text>
+  <text x="190" y="170" font-family="Arial" font-weight="bold" font-size="18" fill="#0F172A" text-anchor="middle">€0</text>
+  <text x="190" y="190" font-family="Arial" font-size="14" fill="#64748B" text-anchor="middle">per month</text>
+  <line x1="120" y1="210" x2="260" y2="210" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="130" y="230" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• Basic workflows</text>
+  <text x="130" y="255" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• 100 API calls/day</text>
+  <text x="130" y="280" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• Community support</text>
+  <text x="130" y="305" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• 1 user</text>
+  
+  <!-- Pro Tier -->
+  <rect x="310" y="100" width="180" height="220" rx="10" fill="white" stroke="#3B82F6" stroke-width="2"/>
+  <rect x="310" y="100" width="180" height="50" rx="10" fill="#3B82F6"/>
+  <text x="400" y="130" font-family="Arial" font-weight="bold" font-size="18" fill="white" text-anchor="middle">Pro</text>
+  <text x="400" y="170" font-family="Arial" font-weight="bold" font-size="18" fill="#0F172A" text-anchor="middle">€49</text>
+  <text x="400" y="190" font-family="Arial" font-size="14" fill="#64748B" text-anchor="middle">per month</text>
+  <line x1="330" y1="210" x2="470" y2="210" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="330" y="230" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• Advanced workflows</text>
+  <text x="330" y="255" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• 10,000 API calls/day</text>
+  <text x="330" y="280" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• Email support</text>
+  <text x="330" y="305" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• 5 users</text>
+  
+  <!-- Enterprise Tier -->
+  <rect x="520" y="100" width="180" height="220" rx="10" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+  <rect x="520" y="100" width="180" height="50" rx="10" fill="#0F172A"/>
+  <text x="610" y="130" font-family="Arial" font-weight="bold" font-size="18" fill="white" text-anchor="middle">Enterprise</text>
+  <text x="610" y="170" font-family="Arial" font-weight="bold" font-size="18" fill="#0F172A" text-anchor="middle">Custom</text>
+  <text x="610" y="190" font-family="Arial" font-size="14" fill="#64748B" text-anchor="middle">annual contract</text>
+  <line x1="540" y1="210" x2="680" y2="210" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="540" y="230" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• Custom workflows</text>
+  <text x="540" y="255" font-family="Arial" font-size="14" fill="#334155" text-anchor="start">• Unlimited API calls</text>
+  <text x
+

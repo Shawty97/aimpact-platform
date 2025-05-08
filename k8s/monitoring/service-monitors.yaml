@@ -1,0 +1,114 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: backend-service-monitor
+  namespace: aimpact
+  labels:
+    app: aimpact-backend
+    release: prometheus  # Used by Prometheus Operator to discover this ServiceMonitor
+spec:
+  selector:
+    matchLabels:
+      app: aimpact-backend  # Label selector to find the services to monitor
+  namespaceSelector:
+    matchNames:
+      - aimpact  # Only discover services in the aimpact namespace
+  endpoints:
+    - port: metrics  # The name of the port in the service that exposes metrics
+      interval: 15s  # Scrape every 15 seconds
+      path: /metrics  # The path where metrics are exposed
+      scheme: http
+      honorLabels: true  # Keep the original metric labels
+      metricRelabelings:  # Rename or drop metrics as needed
+        - sourceLabels: [__name__]
+          regex: 'go_.*'  # Drop Go runtime metrics
+          action: drop
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: voice-service-monitor
+  namespace: aimpact
+  labels:
+    app: aimpact-voice
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: aimpact-voice
+  namespaceSelector:
+    matchNames:
+      - aimpact
+  endpoints:
+    - port: metrics
+      interval: 15s
+      path: /metrics
+      scheme: http
+      honorLabels: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: workflow-service-monitor
+  namespace: aimpact
+  labels:
+    app: aimpact-workflow
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: aimpact-workflow
+  namespaceSelector:
+    matchNames:
+      - aimpact
+  endpoints:
+    - port: metrics
+      interval: 15s
+      path: /metrics
+      scheme: http
+      honorLabels: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: auth-service-monitor
+  namespace: aimpact
+  labels:
+    app: aimpact-auth
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: aimpact-auth
+  namespaceSelector:
+    matchNames:
+      - aimpact
+  endpoints:
+    - port: metrics
+      interval: 15s
+      path: /metrics
+      scheme: http
+      honorLabels: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: agent-service-monitor
+  namespace: aimpact
+  labels:
+    app: aimpact-agent
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: aimpact-agent
+  namespaceSelector:
+    matchNames:
+      - aimpact
+  endpoints:
+    - port: metrics
+      interval: 15s
+      path: /metrics
+      scheme: http
+      honorLabels: true
+

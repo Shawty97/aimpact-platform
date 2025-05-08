@@ -1,0 +1,32 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" rx="20" fill="#F0F9FF"/>
+  
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial" font-weight="bold" font-size="24" fill="#0F172A" text-anchor="middle">Roadmap & Milestones</text>
+  
+  <!-- Timeline -->
+  <line x1="100" y1="150" x2="700" y2="150" stroke="#CBD5E1" stroke-width="4"/>
+  
+  <!-- Q1 2025: MVP Launch -->
+  <circle cx="160" cy="150" r="20" fill="#3B82F6"/>
+  <text x="160" y="155" font-family="Arial" font-weight="bold" font-size="14" fill="white" text-anchor="middle">Q1</text>
+  <rect x="100" y="180" width="120" height="80" rx="10" fill="#3B82F6" opacity="0.1" stroke="#3B82F6" stroke-width="2"/>
+  <text x="160" y="200" font-family="Arial" font-weight="bold" font-size="14" fill="#3B82F6" text-anchor="middle">MVP Launch</text>
+  <text x="160" y="225" font-family="Arial" font-size="12" fill="#334155" text-anchor="middle">• Core platform</text>
+  <text x="160" y="245" font-family="Arial" font-size="12" fill="#334155" text-anchor="middle">• Memory service</text>
+  
+  <!-- Q2 2025: Market Entry -->
+  <circle cx="300" cy="150" r="20" fill="#3B82F6"/>
+  <text x="300" y="155" font-family="Arial" font-weight="bold" font-size="14" fill="white" text-anchor="middle">Q2</text>
+  <rect x="240" y="180" width="120" height="80" rx="10" fill="#3B82F6" opacity="0.8" stroke="#3B82F6" stroke-width="2"/>
+  <text x="300" y="200" font-family="Arial" font-weight="bold" font-size="14" fill="white" text-anchor="middle">Market Entry</text>
+  <text x="300" y="225" font-family="Arial" font-size="12" fill="white" text-anchor="middle">• Recommendation engine</text>
+  <text x="300" y="245" font-family="Arial" font-size="12" fill="white" text-anchor="middle">• 10 paying customers</text>
+  
+  <!-- Q3 2025: Expansion -->
+  <circle cx="440" cy="150" r="20" fill="#94A3B8"/>
+  <text x="440" y="155" font-family="Arial" font-weight="bold" font-size="14" fill="white" text-anchor="middle">Q3</text>
+  <rect x="380" y="180" width="120" height="80" rx="10" fill="white" stroke="#94A3B8" stroke-width="2"/>
+  <text x="440" y="200" font-family="Arial" font-weight="bold" font-size="14" fill="#64748B" text-anchor="middle">Expansion</text>
+  <text x="440" y="225
+

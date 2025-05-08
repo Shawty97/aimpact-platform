@@ -1,0 +1,70 @@
+[Binary Excel file with the following sheets and features:
+
+1. Dashboard:
+   - Summary of key metrics (ARR, MRR, CAC, LTV, Burn Rate, Runway)
+   - Scenario selector (Best, Base, Worst)
+   - Charts for revenue growth, customer growth, cash balance
+   - Executive KPI summary
+
+2. ARR/MRR Forecast:
+   - Monthly forecast for 5 years
+   - Customer count by plan (Free, Pro, Enterprise)
+   - Conversion rates between plans
+   - Average Revenue Per User (ARPU) calculations
+   - Annual and Monthly Recurring Revenue projections
+
+3. Customer Metrics:
+   - Customer Acquisition Cost (CAC) calculations
+   - Lifetime Value (LTV) calculations
+   - Churn rate analysis
+   - Payback period
+   - LTV:CAC ratios
+   - Customer cohort analysis
+
+4. Cost Structure:
+   - Personnel costs by department
+   - Cloud infrastructure costs
+   - Marketing expenses
+   - Sales expenses
+   - R&D costs
+   - G&A expenses
+   - COGS breakdown
+
+5. Cash Flow:
+   - Monthly and annual cash flow projections
+   - Beginning and ending cash balance
+   - Burn rate calculations
+   - Runway calculations
+   - Break-even analysis
+
+6. Cap Table:
+   - Ownership structure
+   - Investment rounds
+   - Dilution calculations
+   - Option pool
+   - Valuation calculations
+
+7. Scenarios:
+   - Best case assumptions
+   - Base case assumptions
+   - Worst case assumptions
+   - Sensitivity analysis
+   - Tornado charts for key variables
+
+8. Use of Funds:
+   - Allocation of Series A funds
+   - Hiring plan
+   - Marketing budget allocation
+   - Product development costs
+   - Runway extension calculation
+
+Features:
+- Dynamic formulas connecting all sheets
+- Data validation for input cells
+- Scenario-based analysis
+- Conditional formatting
+- Interactive charts and graphs
+- Named ranges for easier formula construction
+- Documentation and assumptions clearly labeled
+]
+
